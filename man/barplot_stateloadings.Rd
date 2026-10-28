@@ -18,8 +18,8 @@ A barplot rendered to the active graphics device
 Create a barplot of top stateloadings
 }
 \examples{
-#' ## Load Discovered Statescope object
-load(system.file("extdata", "example_Statescope_Discovered.RData",
+#' ## Load StateDiscovered Statescope object
+load(system.file("extdata", "example_Statescope_StateDiscovered.RData",
     package = "StatescopeR"
 ))
 

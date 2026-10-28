@@ -77,6 +77,14 @@ def cNMF(data,k,nrun,ncores,niter=1000):
     model = models[objective.index(min(objective))]
     return model, cophcor, consensus_matrix
 
+
+def cNMF_Retrieval(data,StateLoadings,niter=1000):
+    k = StateLoadings.shape[1]  
+    model = CNMF(data, num_bases=k, niter=niter)
+    model.W = StateLoadings.to_numpy()
+    model.factorize(niter=niter, compute_w=False)
+    return model
+
                 
 def find_threshold(cophcors,ks,min_cophenetic=0.95):
     cross = [False, False] + [((cophcors[i] < min_cophenetic) & (cophcors[i-1] >= min_cophenetic) & (cophcors[i-2] >= min_cophenetic)) for i in range(2,len(cophcors))]
@@ -116,4 +124,16 @@ def select_k(data_scaled, max_clusters, n_iter, Ncores, min_cophenetic):
                       or biggest_drop(sweep_curve)
         
     return nclust    
-                
+   
+   
+def Create_Cluster_Matrix(GEX,Omega,Fractions,celltype,weighing = 'Omega'):
+ if weighing == 'Omega':
+     Cluster_matrix = ((GEX - np.mean(GEX,axis=0))*Omega.loc[:,celltype].transpose()).to_numpy()
+ elif weighing == 'OmegaFractions':
+     Cluster_matrix = ((GEX - np.mean(GEX,axis=0))*Omega.loc[:,celltype].transpose())
+     Cluster_matrix = Cluster_matrix.mul(Fractions[celltype], axis = 0).to_numpy()
+ elif weighing == 'centering':
+     Cluster_matrix = GEX - np.mean(GEX,axis=0).to_numpy()
+ elif weighing == 'no_weighing':
+     Cluster_matrix = GEX.to_numpy()
+ return Cluster_matrix

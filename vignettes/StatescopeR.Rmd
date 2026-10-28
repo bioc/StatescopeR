@@ -247,11 +247,27 @@ group_prior <- list("Group" = group, "Expectation" = prior)
 
 ## Now you can just run Statescope as with a normal prior. Note we do not give
 ## a ductal cell prior this time
-Statescope <- BLADE_deconvolution(signature, pseudobulk, selected_genes,
+Statescope_group_prior <- BLADE_deconvolution(signature, pseudobulk, selected_genes,
     group_prior,
     cores = 1L,
     Nrep = 1L
 )
+```
+
+## Retrieving states in an external dataset
+
+If you want to retrieve the states you found using Statescope in an external dataset, you can use the StateRetrieval function after running Statescope Deconvolution and Refinement using the same scRNAseq reference. In this example we use the Statescope object which used the group prior as the external dataset. This object was already deconvolved, so only Refinement needs to be run prior to StateRetrieval.
+
+```{r 'Retrieving states in an external dataset'}
+## Run refinement on deconvolved external dataset
+Statescope_group_prior <- Refinement(Statescope_group_prior, signature, pseudobulk, cores = 2L)
+
+## Run StateRetrieval
+Statescope_group_prior <- StateRetrieval(Statescope_group_prior, Statescope)
+
+## Show ductal cell state scores per sample
+metadata(Statescope_group_prior)$statescores$`ductal cell`
+
 ```
 
 # Citing `StatescopeR`

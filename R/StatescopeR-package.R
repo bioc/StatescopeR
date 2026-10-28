@@ -31,6 +31,7 @@ NULL
 #'      estimates to better capture inter-sample variability.
 #'  \code{\link{StateDiscovery}} discovery cell states from inferred cell
 #'  type-specific gene expression profiles.
+#'  \code{\link{StateRetrieval}} retrieve cell states in an external data set
 #'
 #'  After these steps the following functions provide some evaluation
 #'      and plotting functions:

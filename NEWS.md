@@ -55,3 +55,6 @@ and made vignette less minimal
 
 ## StatescopeR 1.1.1 (14-10-2026)
 -   same as 1.0.2 but for dev branch actual deprecation warning of aggregrateAcrossCells and fitTrendVar fix & citation update to published manuscript
+
+## StatescopeR 1.1.2 (28-10-2026)
+-   Added State Retrieval to retrieve discovered states in external data sets

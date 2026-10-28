@@ -3,6 +3,7 @@
 export(BLADE_deconvolution)
 export(Refinement)
 export(StateDiscovery)
+export(StateRetrieval)
 export(barplot_stateloadings)
 export(create_signature)
 export(fetch_signature)

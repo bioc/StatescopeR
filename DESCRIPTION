@@ -1,7 +1,7 @@
 Package: StatescopeR
 Type: Package
 Title: StatescopeR framework for discovery of cell states from cell type-specific gene expression profiles inferred from bulk mRNA profiles
-Version: 1.1.1
+Version: 1.1.2
 Authors@R:c(
     person(given = "Mischa", family = "Steketee", role = c("aut", "cre"),
              email = "m.f.b.steketee@amsterdamumc.nl",

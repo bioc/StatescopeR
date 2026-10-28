@@ -120,8 +120,8 @@ fraction_heatmap <- function(Statescope, ...) {
 #' @importFrom methods is
 #' @export barplot_stateloadings
 #' @examples
-#' #' ## Load Discovered Statescope object
-#' load(system.file("extdata", "example_Statescope_Discovered.RData",
+#' #' ## Load StateDiscovered Statescope object
+#' load(system.file("extdata", "example_Statescope_StateDiscovered.RData",
 #'     package = "StatescopeR"
 #' ))
 #'
@@ -170,6 +170,6 @@ barplot_stateloadings <- function(Statescope, top_n = 1) {
 ## Make Python and dplyr (.) functions global for check
 utils::globalVariables(c(
     "Framework_Iterative", "Purify_AllGenes", "biggest_drop",
-    "cNMF", "find_threshold", "select_k", ".",
+    "cNMF", "cNMF_Retrieval", "find_threshold", "select_k", ".",
     "RMSE", "celltype", "correlation", "gene", "score"
 ))

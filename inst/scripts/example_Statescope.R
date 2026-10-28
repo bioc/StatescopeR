@@ -85,5 +85,4 @@ save(Statescope, file = 'inst/extdata/example_Statescope_Refined.RData')
 Statescope <- StateDiscovery(Statescope, k=2L, Ncores = 2L)
 
 ## Save to RData
-save(Statescope, file = 'inst/extdata/example_Statescope_Discovered.RData')
-
+save(Statescope, file = 'inst/extdata/example_Statescope_StateDiscovered.RData')
