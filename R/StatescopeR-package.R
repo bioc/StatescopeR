@@ -24,14 +24,17 @@ NULL
 #'   \code{\link{fetch_signature}} to fetch one of the premade signatures +
 #'   selected_genes from https://github.com/tgac-vumc/StatescopeData
 #'   After these steps and proper cp10k normalization of the bulk mRNA
-#'   deconvolution and cell state analysis can be done with the following
-#'    functions:
+#'   deconvolution, cell state and ecotype analysis can be done with the
+#'    following functions:
 #'  \code{\link{BLADE_deconvolution}} estimates cell fractions from bulk mRNA.
 #'  \code{\link{Refinement}} refines cell type-specific gene expression profile
 #'      estimates to better capture inter-sample variability.
 #'  \code{\link{StateDiscovery}} discovery cell states from inferred cell
 #'  type-specific gene expression profiles.
-#'  \code{\link{StateRetrieval}} retrieve cell states in an external data set
+#'  \code{\link{StateRetrieval}} retrieve cell states in an external data set.
+#'  \code{\link{EcotypeDiscovery}} discover ecotypes from discovered cell state
+#'  scores
+#'  \code{\link{EcotypeRetrieval}} retrieve ecotypes in an external data set
 #'
 #'  After these steps the following functions provide some evaluation
 #'      and plotting functions:

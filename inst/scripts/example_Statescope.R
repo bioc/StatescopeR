@@ -86,3 +86,32 @@ Statescope <- StateDiscovery(Statescope, k=2L, Ncores = 2L)
 
 ## Save to RData
 save(Statescope, file = 'inst/extdata/example_Statescope_StateDiscovered.RData')
+
+## Discover ecotypes
+Statescope <- EcotypeDiscovery(Statescope, k=2L, Ncores = 2L)
+
+## Save to RData
+save(Statescope,
+     file = 'inst/extdata/example_Statescope_EcotypeDiscovered.RData')
+
+## Try to retrieve ecotypes
+
+## Load StateRetrieved Statescope object
+load(system.file("extdata", "example_Statescope_StateDiscovered.RData",
+    package = "StatescopeR"
+))
+Statescope_StateRetrieved = Statescope
+
+## Load EcotypeDiscovered Statescope object
+load(system.file("extdata", "example_Statescope_EcotypeDiscovered.RData",
+    package = "StatescopeR"
+))
+
+Statescope_EcotypeDiscovered = Statescope
+
+## Retrieve states in refined Statescope object
+Statescope_EcotypeRetrieved <- EcotypeRetrieval(Statescope_StateRetrieved,
+                Statescope_EcotypeDiscovered)
+
+## Look at ecotypescores in external dataset
+S4Vectors::metadata(Statescope_EcotypeRetrieved)$ecotypescore

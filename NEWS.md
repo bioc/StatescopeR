@@ -58,3 +58,6 @@ and made vignette less minimal
 
 ## StatescopeR 1.1.2 (28-10-2026)
 -   Added State Retrieval to retrieve discovered states in external data sets
+
+## StatescopeR 1.1.3 (30-10-2026)
+-   Added Ecotype discovery and retrieval

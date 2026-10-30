@@ -139,7 +139,7 @@ prior <- t(prior) # Transpose it to nSample x nCelltype
 
 Once all input data have been prepared, the (pseudo)bulk RNAseq can be deconvolved to identify transcriptional states. In short the modules work as follows: BLADE_deconvolution employs Bayesian variational inference, modelling the bulk gene expression level of each gene j in sample i by: \begin{equation}
 y_{ij} = log(\sum_{t} f_{i}^t exp(x_{ij}^t)) + \epsilon_{ij}
-\end{equation} with hidden variables $f_{i}^t$ and $x_{ij}^t$ denoting the fraction of cell type t for sample i and the expression of gene j for sample i in cell type j respectively. Refinement further optimizes cell type-specific gene expression profiles, $x_{ij}^t$, by fixing estimated cell fractions and putting more emphasis on capturing inter-sample heterogeneity over staying close to the single cell prior knowledge. StateDiscovery uses convex-NMF to cluster inferred cell type-specific gene expression profiles in an unsupervised manner. These modules are wrappers around the original Python functions `r BiocStyle::Githubpkg("tgac-vumc/Statescope")`.
+\end{equation} with hidden variables $f_{i}^t$ and $x_{ij}^t$ denoting the fraction of cell type t for sample i and the expression of gene j for sample i in cell type j respectively. Refinement further optimizes cell type-specific gene expression profiles, $x_{ij}^t$, by fixing estimated cell fractions and putting more emphasis on capturing inter-sample heterogeneity over staying close to the single cell prior knowledge. StateDiscovery uses convex-NMF to cluster inferred cell type-specific gene expression profiles in an unsupervised manner. EcotypeDiscovery uses convex-NMF again, this time to cluster state scores in an unsupervised manner. These modules are wrappers around the original Python functions `r BiocStyle::Githubpkg("tgac-vumc/Statescope")`.
 
 ```{r 'Run StatescopeR'}
 ## Run Deconvolution module
@@ -151,6 +151,10 @@ Statescope <- Refinement(Statescope, signature, pseudobulk, cores = 2L)
 
 ## Run State Discovery module (pick k=2 for quick example)
 Statescope <- StateDiscovery(Statescope, k = 2L, Ncores = 2L)
+
+## Run Ecotype Discovery module (pick k=2 for quick example)
+Statescope <- EcotypeDiscovery(Statescope, k = 2L, Ncores = 2L)
+
 ```
 
 ## Evaluate Statescope
@@ -179,11 +183,8 @@ metadata(Statescope)$fractions
 ## Show predicted ductal cell type specific gene expression profiles
 assay(metadata(Statescope)$ct_specific_gep$`ductal cell`, "weighted_gep")
 
-## Show ductal cell state scores per sample
-metadata(Statescope)$statescores$`ductal cell`
-
-## Show ductal cell state loadings
-metadata(Statescope)$stateloadings$`ductal cell`
+## Show state scores per sample
+concatenate_statescores(metadata(Statescope)$statescores)
 
 ## Plot heatmap of fractions
 fraction_heatmap(Statescope)
@@ -254,9 +255,9 @@ Statescope_group_prior <- BLADE_deconvolution(signature, pseudobulk, selected_ge
 )
 ```
 
-## Retrieving states in an external dataset
+## Retrieving states and ecotypes in an external dataset
 
-If you want to retrieve the states you found using Statescope in an external dataset, you can use the StateRetrieval function after running Statescope Deconvolution and Refinement using the same scRNAseq reference. In this example we use the Statescope object which used the group prior as the external dataset. This object was already deconvolved, so only Refinement needs to be run prior to StateRetrieval.
+If you want to retrieve the states and ecotypes you found using Statescope in an external dataset, you can use the StateRetrieval and EcotypeRetrieval functions after running Statescope Deconvolution and Refinement using the same scRNAseq reference. In this example we use the Statescope object which used the group prior as the external dataset. This object was already deconvolved, so only Refinement needs to be run prior to StateRetrieval.
 
 ```{r 'Retrieving states in an external dataset'}
 ## Run refinement on deconvolved external dataset
@@ -265,8 +266,14 @@ Statescope_group_prior <- Refinement(Statescope_group_prior, signature, pseudobu
 ## Run StateRetrieval
 Statescope_group_prior <- StateRetrieval(Statescope_group_prior, Statescope)
 
-## Show ductal cell state scores per sample
-metadata(Statescope_group_prior)$statescores$`ductal cell`
+## Show state scores per sample
+concatenate_statescores(metadata(Statescope_group_prior)$statescores)
+
+## Run EcotypeRetrieval
+Statescope_group_prior <- EcotypeRetrieval(Statescope_group_prior, Statescope)
+
+## Show ecotypescores per sample
+metadata(Statescope_group_prior)$ecotypescores
 
 ```
 

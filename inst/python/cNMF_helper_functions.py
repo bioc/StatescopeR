@@ -28,7 +28,7 @@ from sklearn.metrics import silhouette_score
 import random
 from scipy.cluster.hierarchy import average, cophenet
 from scipy.spatial.distance import  pdist
-from joblib import Parallel, delayed
+from joblib import Parallel, delayed, parallel_backend
 import logging
 
 #----------------------------------------------------------------------------
